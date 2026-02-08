@@ -9,11 +9,9 @@
 :root {
   --bg: #0b0614;
   --bg-alt: #120a24;
-  --card: rgba(24, 18, 45, 0.75);
   --text: #f2efff;
   --muted: #b7aedf;
   --accent: #a855f7;
-  --accent-strong: #c084fc;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,66 +23,21 @@ body {
   overflow-x: hidden;
 }
 
-/* ================= STICKY BRAND ================= */
-.brand-sticky {
-  position: fixed;
-  top: 22px;
-  right: 32px;
-  font-weight: 900;
-  font-size: 1.1rem;
-  letter-spacing: .08em;
-  color: var(--accent-strong);
-  opacity: 0;
-  transform: translateY(-10px) scale(0.85);
-  transition: all .4s cubic-bezier(.22,1,.36,1);
-  z-index: 1000;
-}
-.brand-sticky.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
 /* ================= HERO (LOCKED) ================= */
 .hero {
-  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   padding-left: clamp(2.5rem, 8vw, 6rem);
-  overflow: hidden;
   background:
     radial-gradient(circle at 30% 40%, rgba(168,85,247,0.35), transparent 60%),
     linear-gradient(180deg, rgba(10,6,20,0.35), rgba(10,6,20,0.9)),
-    url("rox1-illustration.png");
-  background-size: 110%;
-  background-position: center right;
-  background-repeat: no-repeat;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 260px;
-  background: linear-gradient(
-    to bottom,
-    rgba(11,6,20,0),
-    rgba(11,6,20,1)
-  );
-}
-
-.hero-overlay {
-  max-width: 520px;
-  position: relative;
-  z-index: 2;
+    url("rox1-illustration.png") no-repeat center right / 110%;
 }
 
 .hero-name {
   font-size: clamp(4.5rem, 10vw, 7.5rem);
   font-weight: 900;
-  line-height: .95;
   color: #e9d5ff;
 }
 
@@ -94,9 +47,9 @@ body {
   color: var(--muted);
 }
 
-/* ================= SECTIONS ================= */
+/* ================= SECTION ================= */
 .mods-section {
-  max-width: 1400px; /* wider than before */
+  max-width: 1400px;
   margin: 0 auto;
   padding: 7rem 3rem;
 }
@@ -115,12 +68,12 @@ body {
   gap: 56px;
 }
 
-/* bottom row cards */
-.mod-card.wide-left {
-  grid-column: 1 / span 2;
-}
-.mod-card.wide-right {
-  grid-column: 2 / span 2;
+/* wrapper for last row */
+.mods-grid-last {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 56px;
 }
 
 /* ================= MOD CARD ================= */
@@ -145,29 +98,19 @@ body {
 }
 
 .tag {
-  display: inline-block;
   font-size: .7rem;
   padding: 6px 12px;
   border-radius: 999px;
   background: rgba(168,85,247,.3);
   margin-bottom: 14px;
-}
-
-footer {
-  text-align: center;
-  padding: 3rem;
-  color: var(--muted);
-  font-size: .85rem;
+  display: inline-block;
 }
 
 /* ================= RESPONSIVE ================= */
 @media(max-width: 900px) {
-  .mods-grid {
+  .mods-grid,
+  .mods-grid-last {
     grid-template-columns: 1fr;
-  }
-  .mod-card.wide-left,
-  .mod-card.wide-right {
-    grid-column: auto;
   }
 }
 </style>
@@ -175,16 +118,12 @@ footer {
 
 <body>
 
-<div class="brand-sticky" id="brandSticky">ROX</div>
-
-<header class="hero" id="hero">
-  <div class="hero-overlay" id="heroText">
+<header class="hero">
+  <div>
     <h1 class="hero-name">ROX</h1>
     <p class="hero-sub">Minecraft Mod Developer</p>
   </div>
 </header>
-
-<main>
 
 <section class="mods-section">
   <h2 class="section-title">All Mods</h2>
@@ -198,35 +137,13 @@ footer {
     <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
     <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
 
-    <div class="mod-card wide-left"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
-    <div class="mod-card wide-right"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
+    <!-- LAST ROW (2 CARDS, SAME ROW, CENTERED) -->
+    <div class="mods-grid-last">
+      <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
+      <div class="mod-card"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
+    </div>
   </div>
 </section>
-
-</main>
-
-<footer>© 2026 Rox · Built for Minecraft modding</footer>
-
-<script>
-/* ===== HERO SCROLL (LOCKED) ===== */
-const hero = document.getElementById("hero");
-const heroText = document.getElementById("heroText");
-const brand = document.getElementById("brandSticky");
-
-window.addEventListener("scroll", () => {
-  const y = window.scrollY;
-  const raw = Math.min(y / 500, 1);
-  const progress = 1 - Math.pow(1 - raw, 3);
-
-  hero.style.transform = `translateY(${progress * -120}px)`;
-  hero.style.opacity = 1 - progress * 0.6;
-  hero.style.backgroundSize = `${110 + progress * 6}%`;
-  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
-  heroText.style.transform = `translateY(${progress * -40}px)`;
-
-  brand.classList.toggle("active", progress > 0.55);
-});
-</script>
 
 </body>
 </html>
