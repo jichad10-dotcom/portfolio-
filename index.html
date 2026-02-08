@@ -58,6 +58,7 @@ body {
     url("rox1-illustration.png");
   background-size: 110%;
   background-position: center right;
+  background-repeat: no-repeat;
 }
 .hero::after {
   content: "";
@@ -94,29 +95,35 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS (RESTORED) ================= */
+/* ================= FEATURED MODS (SHORTER – FIXED) ================= */
 .featured {
   display: grid;
-  gap: 5rem;
+  gap: 3rem;
 }
 
 .featured-card {
   position: sticky;
   top: 120px;
-  padding: 3rem;
-  border-radius: 28px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.2rem;
+  padding: 1.1rem;
+  border-radius: 22px;
   background: var(--card);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(168,85,247,0.3);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(168,85,247,0.25);
 
   box-shadow:
-    0 0 0 1px rgba(168,85,247,0.35),
-    0 0 90px rgba(168,85,247,0.35),
-    0 0 180px rgba(168,85,247,0.25);
+    0 0 0 1px rgba(168,85,247,0.28),
+    0 0 40px rgba(168,85,247,0.18),
+    0 0 80px rgba(168,85,247,0.14);
 
   opacity: 0;
-  transform: translateY(70px);
-  transition: all .9s cubic-bezier(.22,1,.36,1);
+  transform: translateY(50px);
+  transition:
+    opacity .8s cubic-bezier(.22,1,.36,1),
+    transform .8s cubic-bezier(.22,1,.36,1),
+    box-shadow .35s ease;
 }
 
 .featured-card.visible {
@@ -124,19 +131,10 @@ body {
   transform: translateY(0);
 }
 
-/* 🔑 INNER WRAPPER — VISUAL SHRINK */
-.featured-inner {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 3rem;
-
-  transform: scale(0.7);          /* 👈 70% height visually */
-  transform-origin: top center;
-}
-
 .featured-media {
-  min-height: 260px;
-  border-radius: 20px;
+  width: 100%;
+  min-height: 60px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -147,13 +145,14 @@ body {
 }
 
 .featured-content h3 {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  margin-bottom: .25rem;
 }
 
 .featured-content p {
+  font-size: .85rem;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.35;
 }
 
 /* ================= ALL MODS (LOCKED) ================= */
@@ -213,32 +212,26 @@ footer {
 
   <div class="featured">
     <div class="featured-card">
-      <div class="featured-inner">
-        <div class="featured-media"><img src="mod1.png"></div>
-        <div class="featured-content">
-          <h3>Better Dungeons</h3>
-          <p>Advanced dungeon systems with deep progression.</p>
-        </div>
+      <div class="featured-media"><img src="mod1.png"></div>
+      <div class="featured-content">
+        <h3>Better Dungeons</h3>
+        <p>Advanced dungeon systems with optimized performance.</p>
       </div>
     </div>
 
     <div class="featured-card">
-      <div class="featured-inner">
-        <div class="featured-media"><img src="mod2.png"></div>
-        <div class="featured-content">
-          <h3>Core Engine</h3>
-          <p>High-performance backend mod.</p>
-        </div>
+      <div class="featured-media"><img src="mod2.png"></div>
+      <div class="featured-content">
+        <h3>Core Engine</h3>
+        <p>High-performance backend powering large projects.</p>
       </div>
     </div>
 
     <div class="featured-card">
-      <div class="featured-inner">
-        <div class="featured-media"><img src="mod3.png"></div>
-        <div class="featured-content">
-          <h3>World Systems</h3>
-          <p>Custom world mechanics.</p>
-        </div>
+      <div class="featured-media"><img src="mod3.png"></div>
+      <div class="featured-content">
+        <h3>World Systems</h3>
+        <p>Custom world mechanics for modpacks.</p>
       </div>
     </div>
   </div>
@@ -247,7 +240,6 @@ footer {
 </main>
 
 <script>
-/* FEATURED SCROLL */
 const featuredCards = document.querySelectorAll(".featured-card");
 const observer = new IntersectionObserver(entries => {
   entries.forEach((entry, i) => {
