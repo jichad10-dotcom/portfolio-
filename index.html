@@ -2,39 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Rox — Minecraft Mod Developer</title>
+  <title>Rox – Minecraft Mod Developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
     :root {
       --bg: #07030f;
       --purple: #a855f7;
-      --card: rgba(20, 12, 36, 0.75);
+      --card: rgba(30, 16, 55, 0.55);
+      --border: rgba(168, 85, 247, 0.35);
+      --glow: rgba(168, 85, 247, 0.45);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: Inter, system-ui, sans-serif;
     }
 
     body {
-      font-family: Inter, system-ui, sans-serif;
-      background: radial-gradient(1200px 800px at 60% 20%, #2a145d, var(--bg));
-      color: #fff;
+      background: radial-gradient(circle at 30% 20%, #2b124f, var(--bg));
+      color: white;
       overflow-x: hidden;
     }
 
-    /* ================= HERO ================= */
+    /* ---------------- HERO ---------------- */
 
     .hero {
       position: relative;
-      height: 100vh;
-      padding: 0 8vw;
+      min-height: 100vh;
+      padding: 8rem 6rem;
       display: flex;
       align-items: center;
-      --scale: 1.25;
-      --overlay: 0.35;
+      overflow: hidden;
+
+      --hero-scale: 1.15;
+      --hero-overlay: 0.35;
     }
 
     .hero::before {
@@ -42,11 +46,12 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(900px 600px at 35% 50%, rgba(168,85,247,.35), transparent 70%),
+        radial-gradient(900px 500px at 30% 50%, rgba(168,85,247,.35), transparent 70%),
         url("rox1-illustration.png") no-repeat right center / contain;
-      transform: scale(var(--scale));
+      transform: scale(var(--hero-scale));
       opacity: 1;
       z-index: 0;
+      will-change: transform;
     }
 
     .hero::after {
@@ -55,11 +60,11 @@
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(7,3,15,.45),
-        rgba(7,3,15,.7),
+        rgba(7,3,15,0.2),
+        rgba(7,3,15,0.6),
         rgba(7,3,15,1)
       );
-      opacity: var(--overlay);
+      opacity: var(--hero-overlay);
       z-index: 1;
     }
 
@@ -70,160 +75,126 @@
     }
 
     .hero h1 {
-      font-size: clamp(3.5rem, 6vw, 5rem);
-      color: #f2e8ff;
-      letter-spacing: -0.03em;
+      font-size: clamp(4rem, 8vw, 6rem);
+      color: #e9d5ff;
+      text-shadow: 0 0 40px rgba(168,85,247,0.6);
     }
 
     .hero p {
-      margin-top: 1rem;
-      opacity: .8;
+      margin-top: 1.2rem;
+      color: #cbd5f5;
+      font-size: 1.1rem;
       line-height: 1.6;
     }
 
-    /* Sticky brand */
+    /* Sticky ROX */
     .brand-sticky {
       position: fixed;
-      top: 24px;
-      right: 32px;
+      top: 1.5rem;
+      right: 2rem;
       font-weight: 700;
-      letter-spacing: .12em;
-      color: var(--purple);
+      letter-spacing: 0.2em;
+      color: #e9d5ff;
       opacity: 0;
-      transform: translateY(-10px);
-      transition: .4s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       cursor: pointer;
       z-index: 50;
     }
 
-    .brand-sticky.show {
+    .brand-sticky.visible {
       opacity: 1;
-      transform: translateY(0);
     }
 
     .brand-sticky:hover {
-      text-shadow: 0 0 18px rgba(168,85,247,.8);
+      text-shadow: 0 0 20px var(--purple);
     }
 
-    /* ================= SECTIONS ================= */
+    /* ---------------- SECTIONS ---------------- */
 
     section {
-      padding: 120px 8vw;
+      padding: 6rem 6rem;
     }
 
     h2 {
-      font-size: 2rem;
-      margin-bottom: 48px;
+      font-size: 2.2rem;
+      margin-bottom: 3rem;
       position: relative;
     }
 
     h2::before {
       content: "";
       position: absolute;
-      left: -16px;
-      top: 50%;
+      left: -1rem;
+      top: 0.4rem;
       width: 4px;
-      height: 24px;
+      height: 1.6rem;
       background: var(--purple);
-      transform: translateY(-50%);
     }
 
-    /* ================= FEATURED ================= */
+    /* ---------------- FEATURED MODS ---------------- */
 
     .featured-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
+      gap: 2.5rem;
     }
 
-    .featured {
-      padding: 32px;
-      background: linear-gradient(
-        to bottom right,
-        rgba(168,85,247,.15),
-        var(--card)
-      );
-      border-radius: 24px;
-      border: 1px solid rgba(168,85,247,.35);
+    .featured-card {
+      padding: 2.5rem;
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      transform: translateY(60px);
       opacity: 0;
-      transform: translateY(40px) scale(.97);
-      transition: .8s cubic-bezier(.22,1,.36,1);
+      transition: all 0.8s cubic-bezier(.22,1,.36,1);
+      box-shadow: 0 0 60px rgba(168,85,247,0.25);
     }
 
-    .featured.visible {
+    .featured-card.visible {
+      transform: translateY(0);
       opacity: 1;
-      transform: none;
     }
 
-    /* ================= ALL MODS ================= */
+    /* ---------------- ALL MODS ---------------- */
 
     .mods-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    .mods-centered {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: center;
-      gap: 32px;
+      gap: 2.5rem;
     }
 
     .mod-card {
       background: var(--card);
-      border-radius: 22px;
-      padding: 28px;
-      border: 1px solid rgba(168,85,247,.35);
-      transition: .35s cubic-bezier(.22,1,.36,1);
-      position: relative;
-      max-width: 360px;
-      width: 100%;
-    }
-
-    .mod-card::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: inherit;
-      background: linear-gradient(120deg, transparent, rgba(168,85,247,.8), transparent);
-      opacity: 0;
-      filter: blur(18px);
-      transition: .35s ease;
-      z-index: -1;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      padding: 2rem;
+      height: 220px;
+      transition: all 0.4s ease;
+      box-shadow:
+        0 0 35px rgba(168,85,247,0.25),
+        inset 0 0 20px rgba(168,85,247,0.15);
     }
 
     .mod-card:hover {
-      transform: translateY(-10px);
-    }
-
-    .mod-card:hover::before {
-      opacity: .9;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: .7rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(168,85,247,.25);
-      margin-bottom: 12px;
+      transform: translateY(-10px) scale(1.02);
+      box-shadow:
+        0 0 80px rgba(168,85,247,0.6),
+        inset 0 0 30px rgba(168,85,247,0.25);
     }
 
     footer {
+      padding: 4rem;
       text-align: center;
-      padding: 80px 0;
-      opacity: .5;
-      font-size: .85rem;
+      opacity: 0.6;
     }
 
     @media (max-width: 900px) {
-      .featured-grid,
-      .mods-grid {
-        grid-template-columns: 1fr;
+      .hero, section {
+        padding: 4rem 2rem;
       }
-      .mods-centered {
-        flex-direction: column;
+      .featured-grid, .mods-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -231,77 +202,71 @@
 
 <body>
 
-  <div class="brand-sticky" id="brandSticky">ROX</div>
+<div class="brand-sticky" id="brandSticky">ROX</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>ROX</h1>
-      <p>Minecraft mod developer building performance-focused and creative gameplay mods.</p>
-    </div>
-  </section>
+<div class="hero" id="hero">
+  <div class="hero-content">
+    <h1>ROX</h1>
+    <p>Minecraft mod developer building performance-focused and creative gameplay mods.</p>
+  </div>
+</div>
 
-  <!-- FEATURED -->
-  <section>
-    <h2>Featured Mods</h2>
-    <div class="featured-grid">
-      <div class="featured">Better Dungeons — Advanced dungeon systems.</div>
-      <div class="featured">Core Engine — High-performance backend.</div>
-    </div>
-  </section>
+<section>
+  <h2>Featured Mods</h2>
+  <div class="featured-grid">
+    <div class="featured-card">Better Dungeons</div>
+    <div class="featured-card">Core Engine</div>
+  </div>
+</section>
 
-  <!-- ALL MODS -->
-  <section>
-    <h2>All Mods</h2>
+<section>
+  <h2>All Mods</h2>
+  <div class="mods-grid">
+    <div class="mod-card">Mod One</div>
+    <div class="mod-card">Mod Two</div>
+    <div class="mod-card">Mod Three</div>
+    <div class="mod-card">Mod Four</div>
+    <div class="mod-card">Mod Five</div>
+    <div class="mod-card">Mod Six</div>
+    <div class="mod-card">Mod Seven</div>
+    <div class="mod-card">Mod Eight</div>
+  </div>
+</section>
 
-    <div class="mods-grid">
-      <div class="mod-card"><span class="tag">Utility</span><h3>Mod One</h3></div>
-      <div class="mod-card"><span class="tag">Worldgen</span><h3>Mod Two</h3></div>
-      <div class="mod-card"><span class="tag">Library</span><h3>Mod Three</h3></div>
+<footer>
+  © 2026 Rox — Built for Minecraft modding
+</footer>
 
-      <div class="mod-card"><span class="tag">Gameplay</span><h3>Mod Four</h3></div>
-      <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
-      <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
+<script>
+  const hero = document.getElementById("hero");
+  const brand = document.getElementById("brandSticky");
 
-      <div class="mods-centered">
-        <div class="mod-card"><span class="tag">Utility</span><h3>Mod Seven</h3></div>
-        <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Eight</h3></div>
-      </div>
-    </div>
-  </section>
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
+    const h = hero.offsetHeight;
+    const p = Math.min(y / h, 1);
 
-  <footer>© 2026 Rox — Built for Minecraft modding</footer>
+    hero.style.setProperty("--hero-scale", 1.15 - p * 0.15);
+    hero.style.setProperty("--hero-overlay", 0.35 + p * 0.65);
 
-  <script>
-    const hero = document.querySelector(".hero");
-    const brand = document.getElementById("brandSticky");
+    brand.classList.toggle("visible", y > h * 0.6);
+  });
 
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY;
-      const h = hero.offsetHeight;
-      const p = Math.min(y / h, 1);
+  brand.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
-      hero.style.setProperty("--scale", 1.25 - p * .18);
-      hero.style.setProperty("--overlay", .35 + p * .6);
-
-      brand.classList.toggle("show", y > h * .6);
-    });
-
-    brand.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          e.target.style.transitionDelay = `${i * 120}ms`;
-          e.target.classList.add("visible");
-        }
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add("visible");
       });
-    }, { threshold: .3 });
+    },
+    { threshold: 0.25 }
+  );
 
-    document.querySelectorAll(".featured").forEach(el => observer.observe(el));
-  </script>
+  document.querySelectorAll(".featured-card").forEach(c => observer.observe(c));
+</script>
 
 </body>
 </html>
