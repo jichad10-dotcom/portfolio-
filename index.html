@@ -60,6 +60,7 @@ body {
   background-position: center right;
   background-repeat: no-repeat;
 }
+
 .hero::after {
   content: "";
   position: absolute;
@@ -73,50 +74,61 @@ body {
     rgba(11,6,20,1)
   );
 }
-.hero-overlay { max-width: 520px; position: relative; z-index: 2; }
+
+.hero-overlay {
+  max-width: 520px;
+  position: relative;
+  z-index: 2;
+}
+
 .hero-name {
   font-size: clamp(4.5rem, 10vw, 7.5rem);
   font-weight: 900;
   line-height: .95;
   color: #e9d5ff;
 }
-.hero-sub { margin-top: 1rem; font-size: 1.1rem; color: var(--muted); }
+
+.hero-sub {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
 
 /* ================= SECTIONS ================= */
 .mods-section {
-  max-width: 1400px; /* wider container */
+  max-width: 1400px; /* wider than before */
   margin: 0 auto;
   padding: 7rem 3rem;
 }
+
 .section-title {
   font-size: 2.4rem;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   border-left: 4px solid var(--accent);
   padding-left: 1rem;
 }
 
-/* ================= ALL MODS (FULL WIDTH) ================= */
+/* ================= ALL MODS GRID ================= */
 .mods-grid {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, minmax(420px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 56px;
 }
 
-.mods-grid.bottom {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(500px, 1fr));
-  gap: 56px;
-  justify-content: center; /* perfect centering */
-  margin-top: 56px;
+/* bottom row cards */
+.mod-card.wide-left {
+  grid-column: 1 / span 2;
+}
+.mod-card.wide-right {
+  grid-column: 2 / span 2;
 }
 
+/* ================= MOD CARD ================= */
 .mod-card {
   background: linear-gradient(180deg, rgba(60,30,120,.3), rgba(10,5,30,.9));
   border-radius: 22px;
   padding: 32px;
-  min-height: 280px;
+  min-height: 260px;
   transition: all .4s cubic-bezier(.22,1,.36,1);
   box-shadow:
     0 0 0 1px rgba(168,85,247,.45),
@@ -149,19 +161,13 @@ footer {
 }
 
 /* ================= RESPONSIVE ================= */
-@media(max-width: 1200px) {
+@media(max-width: 900px) {
   .mods-grid {
-    grid-template-columns: repeat(2, minmax(360px, 1fr));
-  }
-  .mods-grid.bottom {
-    grid-template-columns: repeat(2, minmax(360px, 1fr));
-  }
-}
-
-@media(max-width: 800px) {
-  .mods-grid,
-  .mods-grid.bottom {
     grid-template-columns: 1fr;
+  }
+  .mod-card.wide-left,
+  .mod-card.wide-right {
+    grid-column: auto;
   }
 }
 </style>
@@ -187,14 +193,13 @@ footer {
     <div class="mod-card"><span class="tag">Utility</span><h3>Mod One</h3></div>
     <div class="mod-card"><span class="tag">Worldgen</span><h3>Mod Two</h3></div>
     <div class="mod-card"><span class="tag">Library</span><h3>Mod Three</h3></div>
+
     <div class="mod-card"><span class="tag">Gameplay</span><h3>Mod Four</h3></div>
     <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
     <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
-  </div>
 
-  <div class="mods-grid bottom">
-    <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
-    <div class="mod-card"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
+    <div class="mod-card wide-left"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
+    <div class="mod-card wide-right"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
   </div>
 </section>
 
@@ -219,8 +224,7 @@ window.addEventListener("scroll", () => {
   hero.style.backgroundPositionY = `${50 - progress * 6}%`;
   heroText.style.transform = `translateY(${progress * -40}px)`;
 
-  if (progress > 0.55) brand.classList.add("active");
-  else brand.classList.remove("active");
+  brand.classList.toggle("active", progress > 0.55);
 });
 </script>
 
