@@ -1,300 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Rox — Minecraft Mod Developer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <title>Rox — Minecraft Mod Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root {
-  --purple: #a855f7;
-  --bg: #07030f;
-}
+  <style>
+    :root {
+      --bg: #07030f;
+      --purple: #a855f7;
+      --card: rgba(20, 12, 36, 0.75);
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Inter, system-ui, sans-serif;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-html, body {
-  background: var(--bg);
-  color: #fff;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: radial-gradient(1200px 800px at 60% 20%, #2a145d, var(--bg));
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-/* ================= HERO ================= */
+    /* ================= HERO ================= */
 
-.hero {
-  position: relative;
-  min-height: 100vh;
-  padding: 140px 8vw;
-  display: flex;
-  align-items: center;
-  overflow: hidden; /* IMPORTANT: clips background */
-}
+    .hero {
+      position: relative;
+      height: 100vh;
+      padding: 0 8vw;
+      display: flex;
+      align-items: center;
+      --scale: 1.25;
+      --overlay: 0.35;
+    }
 
-/* background image */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(900px 500px at 30% 50%, rgba(168,85,247,.35), transparent 70%),
-    url("rox1-illustration.png") no-repeat right center / contain;
-  transform: scale(1.15);
-  z-index: 0;
-}
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 600px at 35% 50%, rgba(168,85,247,.35), transparent 70%),
+        url("rox1-illustration.png") no-repeat right center / contain;
+      transform: scale(var(--scale));
+      opacity: 1;
+      z-index: 0;
+    }
 
-/* bottom fade blend */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(7,3,15,0.85) 0%,
-    rgba(7,3,15,0.6) 60%,
-    rgba(7,3,15,1) 100%
-  );
-  z-index: 1;
-}
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(7,3,15,.45),
+        rgba(7,3,15,.7),
+        rgba(7,3,15,1)
+      );
+      opacity: var(--overlay);
+      z-index: 1;
+    }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 560px;
-}
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 520px;
+    }
 
-.hero-content h1 {
-  font-size: clamp(4.5rem, 8vw, 7rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  color: #e9d5ff;
-  text-shadow: 0 0 60px rgba(168,85,247,.6);
-}
+    .hero h1 {
+      font-size: clamp(3.5rem, 6vw, 5rem);
+      color: #f2e8ff;
+      letter-spacing: -0.03em;
+    }
 
-.hero-content p {
-  margin-top: 20px;
-  font-size: 1.15rem;
-  color: #d6cfff;
-}
+    .hero p {
+      margin-top: 1rem;
+      opacity: .8;
+      line-height: 1.6;
+    }
 
-/* ================= STICKY ROX ================= */
+    /* Sticky brand */
+    .brand-sticky {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--purple);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: .4s ease;
+      cursor: pointer;
+      z-index: 50;
+    }
 
-.brand {
-  position: fixed;
-  top: 22px;
-  right: 28px;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  opacity: 0;
-  pointer-events: none;
-  transition: .4s cubic-bezier(.4,0,.2,1);
-  cursor: pointer;
-  z-index: 50;
-}
+    .brand-sticky.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-.brand.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
+    .brand-sticky:hover {
+      text-shadow: 0 0 18px rgba(168,85,247,.8);
+    }
 
-.brand:hover {
-  text-shadow:
-    0 0 18px rgba(168,85,247,.9),
-    0 0 48px rgba(168,85,247,.7);
-  transform: scale(1.08);
-}
+    /* ================= SECTIONS ================= */
 
-/* ================= SECTIONS ================= */
+    section {
+      padding: 120px 8vw;
+    }
 
-section {
-  padding: 120px 8vw;
-}
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 48px;
+      position: relative;
+    }
 
-h2 {
-  font-size: 2.6rem;
-  margin-bottom: 60px;
-  position: relative;
-}
+    h2::before {
+      content: "";
+      position: absolute;
+      left: -16px;
+      top: 50%;
+      width: 4px;
+      height: 24px;
+      background: var(--purple);
+      transform: translateY(-50%);
+    }
 
-h2::before {
-  content: "";
-  position: absolute;
-  left: -18px;
-  top: 8px;
-  width: 4px;
-  height: 32px;
-  background: var(--purple);
-  border-radius: 2px;
-}
+    /* ================= FEATURED ================= */
 
-/* ================= FEATURED MODS ================= */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
 
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 60px;
-}
+    .featured {
+      padding: 32px;
+      background: linear-gradient(
+        to bottom right,
+        rgba(168,85,247,.15),
+        var(--card)
+      );
+      border-radius: 24px;
+      border: 1px solid rgba(168,85,247,.35);
+      opacity: 0;
+      transform: translateY(40px) scale(.97);
+      transition: .8s cubic-bezier(.22,1,.36,1);
+    }
 
-.featured-card {
-  background: linear-gradient(180deg, rgba(90,50,170,.35), rgba(10,5,30,.9));
-  border-radius: 28px;
-  padding: 40px;
-  min-height: 340px;
+    .featured.visible {
+      opacity: 1;
+      transform: none;
+    }
 
-  opacity: 0;
-  transform: translateY(60px) scale(.96);
-  transition: all .9s cubic-bezier(.22,1,.36,1);
+    /* ================= ALL MODS ================= */
 
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.4),
-    0 0 140px rgba(168,85,247,.45);
-}
+    .mods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
 
-.featured-card.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+    .mods-centered {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+    }
 
-/* ================= ALL MODS ================= */
+    .mod-card {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 28px;
+      border: 1px solid rgba(168,85,247,.35);
+      transition: .35s cubic-bezier(.22,1,.36,1);
+      position: relative;
+      max-width: 360px;
+      width: 100%;
+    }
 
-.mods-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
+    .mod-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(120deg, transparent, rgba(168,85,247,.8), transparent);
+      opacity: 0;
+      filter: blur(18px);
+      transition: .35s ease;
+      z-index: -1;
+    }
 
-.mods-grid.bottom {
-  grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
-  margin-top: 40px;
-}
+    .mod-card:hover {
+      transform: translateY(-10px);
+    }
 
-.mod-card {
-  background: linear-gradient(180deg, rgba(60,30,120,.3), rgba(10,5,30,.9));
-  border-radius: 22px;
-  padding: 24px;
-  min-height: 260px;
-  transition: all .4s cubic-bezier(.22,1,.36,1);
+    .mod-card:hover::before {
+      opacity: .9;
+    }
 
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.45),
-    0 0 80px rgba(168,85,247,.45),
-    0 0 160px rgba(168,85,247,.3);
-}
+    .tag {
+      display: inline-block;
+      font-size: .7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(168,85,247,.25);
+      margin-bottom: 12px;
+    }
 
-.mod-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.7),
-    0 0 140px rgba(168,85,247,.6),
-    0 0 260px rgba(168,85,247,.45);
-}
+    footer {
+      text-align: center;
+      padding: 80px 0;
+      opacity: .5;
+      font-size: .85rem;
+    }
 
-.tag {
-  display: inline-block;
-  font-size: .7rem;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(168,85,247,.3);
-  margin-bottom: 12px;
-}
-
-footer {
-  padding: 80px 0;
-  text-align: center;
-  opacity: .6;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width: 900px) {
-  .featured-grid,
-  .mods-grid,
-  .mods-grid.bottom {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+    @media (max-width: 900px) {
+      .featured-grid,
+      .mods-grid {
+        grid-template-columns: 1fr;
+      }
+      .mods-centered {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="brand" id="brand">ROX</div>
+  <div class="brand-sticky" id="brandSticky">ROX</div>
 
-<!-- HERO -->
-<section class="hero" id="top">
-  <div class="hero-content">
-    <h1>ROX</h1>
-    <p>Minecraft mod developer building performance-focused and creative gameplay mods.</p>
-  </div>
-</section>
-
-<!-- FEATURED -->
-<section>
-  <h2>Featured Mods</h2>
-  <div class="featured-grid">
-    <div class="featured-card">
-      <h3>Better Dungeons</h3>
-      <p>Advanced dungeon systems with performance optimizations.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>ROX</h1>
+      <p>Minecraft mod developer building performance-focused and creative gameplay mods.</p>
     </div>
-    <div class="featured-card">
-      <h3>Core Engine</h3>
-      <p>High-performance backend powering multiple large mods.</p>
+  </section>
+
+  <!-- FEATURED -->
+  <section>
+    <h2>Featured Mods</h2>
+    <div class="featured-grid">
+      <div class="featured">Better Dungeons — Advanced dungeon systems.</div>
+      <div class="featured">Core Engine — High-performance backend.</div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ALL MODS -->
-<section>
-  <h2>All Mods</h2>
+  <!-- ALL MODS -->
+  <section>
+    <h2>All Mods</h2>
 
-  <div class="mods-grid">
-    <div class="mod-card"><span class="tag">Utility</span><h3>Mod One</h3></div>
-    <div class="mod-card"><span class="tag">Worldgen</span><h3>Mod Two</h3></div>
-    <div class="mod-card"><span class="tag">Library</span><h3>Mod Three</h3></div>
+    <div class="mods-grid">
+      <div class="mod-card"><span class="tag">Utility</span><h3>Mod One</h3></div>
+      <div class="mod-card"><span class="tag">Worldgen</span><h3>Mod Two</h3></div>
+      <div class="mod-card"><span class="tag">Library</span><h3>Mod Three</h3></div>
 
-    <div class="mod-card"><span class="tag">Gameplay</span><h3>Mod Four</h3></div>
-    <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
-    <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
-  </div>
+      <div class="mod-card"><span class="tag">Gameplay</span><h3>Mod Four</h3></div>
+      <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
+      <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
 
-  <div class="mods-grid bottom">
-    <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
-    <div class="mod-card"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
-  </div>
-</section>
+      <div class="mods-centered">
+        <div class="mod-card"><span class="tag">Utility</span><h3>Mod Seven</h3></div>
+        <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Eight</h3></div>
+      </div>
+    </div>
+  </section>
 
-<footer>© 2026 Rox — Built for Minecraft modding</footer>
+  <footer>© 2026 Rox — Built for Minecraft modding</footer>
 
-<script>
-/* sticky brand */
-const brand = document.getElementById("brand");
-window.addEventListener("scroll", () => {
-  brand.classList.toggle("visible", window.scrollY > 120);
-});
+  <script>
+    const hero = document.querySelector(".hero");
+    const brand = document.getElementById("brandSticky");
 
-/* scroll to top */
-brand.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      const h = hero.offsetHeight;
+      const p = Math.min(y / h, 1);
 
-/* FEATURED MOD SCROLL ANIMATION (REAL ONE) */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach((entry, index) => {
-    if (entry.isIntersecting) {
-      entry.target.style.transitionDelay = `${index * 150}ms`;
-      entry.target.classList.add("visible");
-    }
-  });
-}, { threshold: 0.25 });
+      hero.style.setProperty("--scale", 1.25 - p * .18);
+      hero.style.setProperty("--overlay", .35 + p * .6);
 
-document.querySelectorAll(".featured-card").forEach(card => observer.observe(card));
-</script>
+      brand.classList.toggle("show", y > h * .6);
+    });
+
+    brand.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.transitionDelay = `${i * 120}ms`;
+          e.target.classList.add("visible");
+        }
+      });
+    }, { threshold: .3 });
+
+    document.querySelectorAll(".featured").forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
