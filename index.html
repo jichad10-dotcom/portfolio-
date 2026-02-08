@@ -25,7 +25,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ================= STICKY BRAND ================= */
+/* ===== STICKY BRAND ===== */
 .brand-sticky {
   position: fixed;
   top: 22px;
@@ -44,7 +44,7 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* ================= HERO ================= */
+/* ===== HERO ===== */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -52,49 +52,35 @@ body {
   align-items: center;
   padding-left: clamp(2.5rem, 8vw, 6rem);
   overflow: hidden;
-
   background:
     radial-gradient(circle at 30% 40%, rgba(168,85,247,0.35), transparent 60%),
     linear-gradient(180deg, rgba(10,6,20,0.35), rgba(10,6,20,0.9)),
     url("rox1-illustration.png");
-
   background-size: 110%;
   background-position: center right;
   background-repeat: no-repeat;
-
-  will-change: transform, opacity, background-size, background-position;
 }
 
 .hero::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: auto 0 0 0;
   height: 260px;
-  background: linear-gradient(
-    to bottom,
-    rgba(11,6,20,0),
-    rgba(11,6,20,1)
-  );
-  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(11,6,20,0), rgba(11,6,20,1));
 }
 
 .hero-overlay {
   max-width: 520px;
   position: relative;
   z-index: 2;
-  will-change: transform;
 }
 
 .hero-name {
   font-size: clamp(4.5rem, 10vw, 7.5rem);
   font-weight: 900;
-  line-height: 0.95;
   color: #e9d5ff;
-  text-shadow:
-    0 0 40px rgba(168,85,247,0.85),
-    0 0 90px rgba(168,85,247,0.6);
+  line-height: .95;
+  text-shadow: 0 0 40px rgba(168,85,247,.85), 0 0 90px rgba(168,85,247,.6);
 }
 
 .hero-sub {
@@ -103,10 +89,10 @@ body {
   color: var(--muted);
 }
 
-/* ================= SECTIONS ================= */
+/* ===== SECTIONS ===== */
 .mods-section {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   padding: 7rem 3rem;
 }
 
@@ -117,7 +103,7 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS ================= */
+/* ===== FEATURED MODS ===== */
 .featured {
   display: grid;
   gap: 4rem;
@@ -135,7 +121,6 @@ body {
   backdrop-filter: blur(18px);
   border: 1px solid rgba(168,85,247,0.25);
   box-shadow: 0 30px 80px rgba(0,0,0,0.65);
-
   opacity: 0;
   transform: translateY(40px);
   transition: all .8s cubic-bezier(.22,1,.36,1);
@@ -153,7 +138,7 @@ body {
   border-radius: 18px;
 }
 
-/* ================= ALL MODS GRID ================= */
+/* ===== ALL MODS GRID ===== */
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -163,22 +148,20 @@ body {
 .card {
   position: relative;
   background: var(--card);
-  backdrop-filter: blur(16px);
   border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(168,85,247,0.25);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.55);
-  transition: transform .35s ease, box-shadow .35s ease;
+  border: 1px solid rgba(168,85,247,.25);
+  box-shadow: 0 15px 40px rgba(0,0,0,.55);
+  transition: transform .35s ease;
 }
 
 .card::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -1px;
   border-radius: 22px;
-  box-shadow: 0 0 0 rgba(168,85,247,0);
-  transition: box-shadow .35s ease;
   pointer-events: none;
+  transition: box-shadow .35s cubic-bezier(.22,1,.36,1);
 }
 
 .card:hover {
@@ -186,7 +169,9 @@ body {
 }
 
 .card:hover::after {
-  box-shadow: 0 0 40px rgba(168,85,247,0.35);
+  box-shadow:
+    0 0 30px rgba(168,85,247,0.45),
+    0 0 80px rgba(168,85,247,0.25);
 }
 
 .card img {
@@ -199,29 +184,17 @@ body {
   padding: 1.4rem;
 }
 
-.card h3 {
-  transition: transform .3s ease, color .3s ease;
-}
-
-.card:hover h3 {
-  transform: translateY(-2px);
-  color: #e9d5ff;
-}
-
-/* Badge */
 .badge {
   display: inline-block;
   margin-bottom: .6rem;
   padding: .25rem .6rem;
   font-size: .7rem;
-  letter-spacing: .05em;
-  text-transform: uppercase;
   border-radius: 999px;
-  background: rgba(168,85,247,0.15);
+  background: rgba(168,85,247,.15);
   color: var(--accent-strong);
+  text-transform: uppercase;
 }
 
-/* Links */
 .card-links {
   margin-top: .8rem;
   display: flex;
@@ -232,14 +205,10 @@ body {
 .card-links a {
   color: var(--muted);
   text-decoration: none;
-  transition: color .25s ease;
 }
+.card-links a:hover { color: var(--accent-strong); }
 
-.card-links a:hover {
-  color: var(--accent-strong);
-}
-
-/* ================= FOOTER ================= */
+/* ===== FOOTER ===== */
 footer {
   text-align: center;
   padding: 3rem;
@@ -262,129 +231,59 @@ footer {
 
 <main>
 
+<!-- FEATURED MODS (3) -->
 <section class="mods-section">
   <h2 class="section-title">Featured Mods</h2>
-
   <div class="featured">
-    <div class="featured-card">
-      <img src="mod1.png">
-      <div>
-        <h3>Featured Mod One</h3>
-        <p>Flagship gameplay mod with advanced mechanics.</p>
-      </div>
-    </div>
-
-    <div class="featured-card">
-      <img src="mod2.png">
-      <div>
-        <h3>Featured Mod Two</h3>
-        <p>Performance-focused mod built for large servers.</p>
-      </div>
-    </div>
+    <div class="featured-card"><img src="mod1.png"><div><h3>Mod One</h3><p>Gameplay overhaul.</p></div></div>
+    <div class="featured-card"><img src="mod2.png"><div><h3>Mod Two</h3><p>Performance focused.</p></div></div>
+    <div class="featured-card"><img src="mod3.png"><div><h3>Mod Three</h3><p>Advanced utility systems.</p></div></div>
   </div>
 </section>
 
+<!-- ALL MODS (7) -->
 <section class="mods-section">
   <h2 class="section-title">All Mods</h2>
-
   <div class="projects">
-    <div class="card">
-      <img src="mod3.png">
-      <div class="card-content">
-        <span class="badge">Utility</span>
-        <h3>Mod Three</h3>
-        <p>Quality-of-life utilities.</p>
-        <div class="card-links">
-          <a href="#">Modrinth →</a>
-          <a href="#">GitHub →</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="mod4.png">
-      <div class="card-content">
-        <span class="badge">Performance</span>
-        <h3>Mod Four</h3>
-        <p>Server-side optimizations.</p>
-        <div class="card-links">
-          <a href="#">Modrinth →</a>
-          <a href="#">GitHub →</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="mod5.png">
-      <div class="card-content">
-        <span class="badge">Worldgen</span>
-        <h3>Mod Five</h3>
-        <p>Enhanced terrain generation.</p>
-        <div class="card-links">
-          <a href="#">Modrinth →</a>
-          <a href="#">GitHub →</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="mod6.png">
-      <div class="card-content">
-        <span class="badge">Library</span>
-        <h3>Mod Six</h3>
-        <p>Shared modding utilities.</p>
-        <div class="card-links">
-          <a href="#">GitHub →</a>
-        </div>
-      </div>
-    </div>
+    <div class="card"><img src="mod4.png"><div class="card-content"><span class="badge">Utility</span><h3>Mod Four</h3></div></div>
+    <div class="card"><img src="mod5.png"><div class="card-content"><span class="badge">Worldgen</span><h3>Mod Five</h3></div></div>
+    <div class="card"><img src="mod6.png"><div class="card-content"><span class="badge">Library</span><h3>Mod Six</h3></div></div>
+    <div class="card"><img src="mod7.png"><div class="card-content"><span class="badge">Gameplay</span><h3>Mod Seven</h3></div></div>
+    <div class="card"><img src="mod8.png"><div class="card-content"><span class="badge">Performance</span><h3>Mod Eight</h3></div></div>
+    <div class="card"><img src="mod9.png"><div class="card-content"><span class="badge">Utility</span><h3>Mod Nine</h3></div></div>
+    <div class="card"><img src="mod10.png"><div class="card-content"><span class="badge">Experimental</span><h3>Mod Ten</h3></div></div>
   </div>
 </section>
 
 </main>
 
-<footer>
-© 2026 Rox · Built for Minecraft modding
-</footer>
+<footer>© 2026 Rox · Built for Minecraft modding</footer>
 
 <script>
-/* HERO SCROLL */
 const hero = document.getElementById("hero");
 const heroText = document.getElementById("heroText");
 const brand = document.getElementById("brandSticky");
 
 window.addEventListener("scroll", () => {
   const y = window.scrollY;
-  const raw = Math.min(y / 500, 1);
-  const progress = 1 - Math.pow(1 - raw, 3);
-
-  hero.style.transform = `translateY(${progress * -120}px)`;
-  hero.style.opacity = 1 - progress * 0.6;
-  hero.style.backgroundSize = `${110 + progress * 6}%`;
-  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
-
-  heroText.style.transform = `translateY(${progress * -40}px)`;
-
-  if (progress > 0.55) brand.classList.add("active");
-  else brand.classList.remove("active");
+  const p = 1 - Math.pow(1 - Math.min(y / 500, 1), 3);
+  hero.style.transform = `translateY(${p * -120}px)`;
+  hero.style.opacity = 1 - p * .6;
+  hero.style.backgroundSize = `${110 + p * 6}%`;
+  heroText.style.transform = `translateY(${p * -40}px)`;
+  brand.classList.toggle("active", p > .55);
 });
 
-/* FEATURED STAGGER */
-const featuredCards = document.querySelectorAll(".featured-card");
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const index = [...featuredCards].indexOf(entry.target);
-      setTimeout(() => {
-        entry.target.classList.add("visible");
-      }, index * 200);
-      observer.unobserve(entry.target);
+const cards = document.querySelectorAll(".featured-card");
+const obs = new IntersectionObserver(e=>{
+  e.forEach((x,i)=>{
+    if(x.isIntersecting){
+      setTimeout(()=>x.target.classList.add("visible"), i*200);
+      obs.unobserve(x.target);
     }
   });
-}, { threshold: 0.3 });
-
-featuredCards.forEach(card => observer.observe(card));
+},{threshold:.3});
+cards.forEach(c=>obs.observe(c));
 </script>
 
 </body>
