@@ -44,7 +44,7 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* ================= HERO ================= */
+/* ================= HERO (LOCKED – DO NOT TOUCH) ================= */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -117,7 +117,7 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS ================= */
+/* ================= FEATURED MODS (ANIMATED) ================= */
 .featured {
   display: grid;
   gap: 4rem;
@@ -135,6 +135,18 @@ body {
   backdrop-filter: blur(18px);
   border: 1px solid rgba(168,85,247,0.25);
   box-shadow: 0 30px 80px rgba(0,0,0,0.65);
+
+  /* animation base */
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    opacity .8s cubic-bezier(.22,1,.36,1),
+    transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+.featured-card.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .featured-card img {
@@ -210,6 +222,7 @@ footer {
         <p>Flagship gameplay mod with advanced mechanics.</p>
       </div>
     </div>
+
     <div class="featured-card">
       <img src="mod2.png">
       <div>
@@ -242,6 +255,7 @@ footer {
 </footer>
 
 <script>
+/* ===== HERO SCROLL (LOCKED) ===== */
 const hero = document.getElementById("hero");
 const heroText = document.getElementById("heroText");
 const brand = document.getElementById("brandSticky");
@@ -249,7 +263,7 @@ const brand = document.getElementById("brandSticky");
 window.addEventListener("scroll", () => {
   const y = window.scrollY;
   const raw = Math.min(y / 500, 1);
-  const progress = 1 - Math.pow(1 - raw, 3); // easeOutCubic
+  const progress = 1 - Math.pow(1 - raw, 3);
 
   hero.style.transform = `translateY(${progress * -120}px)`;
   hero.style.opacity = 1 - progress * 0.6;
@@ -262,6 +276,24 @@ window.addEventListener("scroll", () => {
   if (progress > 0.55) brand.classList.add("active");
   else brand.classList.remove("active");
 });
+
+/* ===== FEATURED MODS SCROLL REVEAL ===== */
+const featuredCards = document.querySelectorAll(".featured-card");
+
+const featuredObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${index * 180}ms`;
+        entry.target.classList.add("visible");
+        featuredObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.35 }
+);
+
+featuredCards.forEach(card => featuredObserver.observe(card));
 </script>
 
 </body>
