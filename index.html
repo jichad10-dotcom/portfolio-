@@ -95,10 +95,10 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS (SHORTER – FIXED) ================= */
+/* ================= FEATURED MODS (50% HEIGHT) ================= */
 .featured {
   display: grid;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 .featured-card {
@@ -106,17 +106,20 @@ body {
   top: 120px;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 1.2rem;
-  padding: 1.1rem;
+  gap: 2rem;
+  padding: 1.6rem;
   border-radius: 22px;
   background: var(--card);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(168,85,247,0.25);
 
+  /* reduced glow */
   box-shadow:
     0 0 0 1px rgba(168,85,247,0.28),
     0 0 40px rgba(168,85,247,0.18),
     0 0 80px rgba(168,85,247,0.14);
+
+  min-height: 135px;
 
   opacity: 0;
   transform: translateY(50px);
@@ -131,10 +134,17 @@ body {
   transform: translateY(0);
 }
 
+.featured-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,0.45),
+    0 0 70px rgba(168,85,247,0.3),
+    0 0 140px rgba(168,85,247,0.22);
+}
+
 .featured-media {
   width: 100%;
-  min-height: 60px;
-  border-radius: 12px;
+  min-height: 90px;
+  border-radius: 14px;
   overflow: hidden;
 }
 
@@ -145,14 +155,14 @@ body {
 }
 
 .featured-content h3 {
-  font-size: 1.05rem;
-  margin-bottom: .25rem;
+  font-size: 1.2rem;
+  margin-bottom: .4rem;
 }
 
 .featured-content p {
-  font-size: .85rem;
+  font-size: .9rem;
   color: var(--muted);
-  line-height: 1.35;
+  line-height: 1.45;
 }
 
 /* ================= ALL MODS (LOCKED) ================= */
@@ -184,12 +194,30 @@ body {
     0 0 140px rgba(168,85,247,.6),
     0 0 260px rgba(168,85,247,.45);
 }
+.tag {
+  display: inline-block;
+  font-size: .7rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(168,85,247,.3);
+  margin-bottom: 12px;
+}
 
 footer {
   text-align: center;
   padding: 3rem;
   color: var(--muted);
   font-size: .85rem;
+}
+
+@media(max-width: 900px) {
+  .featured-card {
+    grid-template-columns: 1fr;
+  }
+  .mods-grid,
+  .mods-grid.bottom {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -237,22 +265,64 @@ footer {
   </div>
 </section>
 
+<section class="mods-section">
+  <h2 class="section-title">All Mods</h2>
+
+  <div class="mods-grid">
+    <div class="mod-card"><span class="tag">Utility</span><h3>Mod One</h3></div>
+    <div class="mod-card"><span class="tag">Worldgen</span><h3>Mod Two</h3></div>
+    <div class="mod-card"><span class="tag">Library</span><h3>Mod Three</h3></div>
+    <div class="mod-card"><span class="tag">Gameplay</span><h3>Mod Four</h3></div>
+    <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
+    <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
+  </div>
+
+  <div class="mods-grid bottom">
+    <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
+    <div class="mod-card"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
+  </div>
+</section>
+
 </main>
 
+<footer>© 2026 Rox · Built for Minecraft modding</footer>
+
 <script>
+/* ===== HERO SCROLL (LOCKED) ===== */
+const hero = document.getElementById("hero");
+const heroText = document.getElementById("heroText");
+const brand = document.getElementById("brandSticky");
+
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  const raw = Math.min(y / 500, 1);
+  const progress = 1 - Math.pow(1 - raw, 3);
+
+  hero.style.transform = `translateY(${progress * -120}px)`;
+  hero.style.opacity = 1 - progress * 0.6;
+  hero.style.backgroundSize = `${110 + progress * 6}%`;
+  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
+  heroText.style.transform = `translateY(${progress * -40}px)`;
+
+  if (progress > 0.55) brand.classList.add("active");
+  else brand.classList.remove("active");
+});
+
+/* ===== FEATURED MOD SCROLL ===== */
 const featuredCards = document.querySelectorAll(".featured-card");
-const observer = new IntersectionObserver(entries => {
+const featuredObserver = new IntersectionObserver(entries => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
       entry.target.style.transitionDelay = `${i * 180}ms`;
       entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
+      featuredObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.3 });
 
-featuredCards.forEach(card => observer.observe(card));
+featuredCards.forEach(card => featuredObserver.observe(card));
 </script>
 
 </body>
 </html>
+
