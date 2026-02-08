@@ -103,14 +103,15 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= ALL MODS ================= */
+/* ================= ALL MODS (WIDER) ================= */
 .mods-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, minmax(360px, 1fr)); /* wider */
   gap: 48px;
 }
+
 .mods-grid.bottom {
-  grid-template-columns: repeat(2, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, minmax(380px, 1fr)); /* wider */
   justify-content: center;
   margin-top: 48px;
 }
@@ -126,6 +127,7 @@ body {
     0 0 80px rgba(168,85,247,.45),
     0 0 160px rgba(168,85,247,.3);
 }
+
 .mod-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow:
