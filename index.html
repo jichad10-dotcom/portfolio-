@@ -21,10 +21,7 @@
 body {
   font-family: system-ui, sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(900px 500px at 10% 20%, rgba(168,85,247,0.35), transparent 55%),
-    radial-gradient(700px 400px at 90% 70%, rgba(192,132,252,0.25), transparent 55%),
-    linear-gradient(180deg, var(--bg), var(--bg-alt));
+  background: linear-gradient(180deg, var(--bg), var(--bg-alt));
   overflow-x: hidden;
 }
 
@@ -47,53 +44,32 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* ===== HERO (BLENDED SCENE) ===== */
+/* ===== HERO (BACKGROUND IMAGE SCENE) ===== */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: clamp(2.5rem, 8vw, 6rem);
+
+  background:
+    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.35), transparent 60%),
+    linear-gradient(180deg, rgba(10,6,20,0.35), rgba(10,6,20,0.9)),
+    url("rox1-illustration.png");
+
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+
   will-change: transform, opacity;
 }
 
-.hero-visual {
-  position: relative;
-  width: min(1200px, 94vw);
-  border-radius: 36px;
-  overflow: hidden;
-  box-shadow:
-    0 70px 180px rgba(0,0,0,0.8),
-    0 0 140px rgba(168,85,247,0.45);
-}
-
-.hero-visual img {
-  width: 100%;
-  display: block;
-}
-
-/* lighting + blend */
-.hero-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.35), transparent 60%),
-    linear-gradient(180deg, rgba(10,6,20,0.15), rgba(10,6,20,0.75));
-}
-
-/* overlay text */
 .hero-overlay {
-  position: absolute;
-  inset: 0;
-  padding: clamp(2.5rem, 6vw, 5.5rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 2;
+  max-width: 520px;
 }
 
 .hero-name {
-  font-size: clamp(4rem, 10vw, 7.5rem);
+  font-size: clamp(4.5rem, 10vw, 7.5rem);
   font-weight: 900;
   color: #e9d5ff;
   line-height: 0.95;
@@ -106,7 +82,6 @@ body {
   margin-top: 1rem;
   font-size: 1.1rem;
   color: var(--muted);
-  max-width: 420px;
 }
 
 /* ===== MOD SECTIONS ===== */
@@ -197,12 +172,9 @@ footer {
 
 <!-- HERO -->
 <header class="hero" id="hero">
-  <div class="hero-visual">
-    <img src="rox1-illustration.png" alt="Rox working on a Minecraft mod">
-    <div class="hero-overlay">
-      <h1 class="hero-name">ROX</h1>
-      <p class="hero-sub">Minecraft Mod Developer</p>
-    </div>
+  <div class="hero-overlay">
+    <h1 class="hero-name">ROX</h1>
+    <p class="hero-sub">Minecraft Mod Developer</p>
   </div>
 </header>
 
