@@ -113,19 +113,34 @@ body {
   border-radius: 28px;
   background: var(--card);
   backdrop-filter: blur(18px);
-  border: 1px solid rgba(168,85,247,0.3);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+  border: 1px solid rgba(168,85,247,0.35);
+
+  /* ✨ glow (idle) */
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,0.45),
+    0 0 90px rgba(168,85,247,0.35),
+    0 0 180px rgba(168,85,247,0.25);
 
   min-height: 380px;
 
   opacity: 0;
   transform: translateY(70px);
-  transition: all .9s cubic-bezier(.22,1,.36,1);
+  transition: 
+    opacity .9s cubic-bezier(.22,1,.36,1),
+    transform .9s cubic-bezier(.22,1,.36,1),
+    box-shadow .4s ease;
 }
 
 .featured-card.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.featured-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,.7),
+    0 0 140px rgba(168,85,247,.6),
+    0 0 260px rgba(168,85,247,.45);
 }
 
 .featured-media {
@@ -170,6 +185,7 @@ body {
   padding: 28px;
   min-height: 260px;
   transition: all .4s cubic-bezier(.22,1,.36,1);
+
   box-shadow:
     0 0 0 1px rgba(168,85,247,.45),
     0 0 80px rgba(168,85,247,.45),
@@ -230,9 +246,7 @@ footer {
 
   <div class="featured">
     <div class="featured-card">
-      <div class="featured-media">
-        <img src="mod1.png" alt="Better Dungeons">
-      </div>
+      <div class="featured-media"><img src="mod1.png"></div>
       <div class="featured-content">
         <h3>Better Dungeons</h3>
         <p>Advanced dungeon systems with deep progression and optimized performance.</p>
@@ -240,9 +254,7 @@ footer {
     </div>
 
     <div class="featured-card">
-      <div class="featured-media">
-        <img src="mod2.png" alt="Core Engine">
-      </div>
+      <div class="featured-media"><img src="mod2.png"></div>
       <div class="featured-content">
         <h3>Core Engine</h3>
         <p>High-performance backend mod powering large-scale Minecraft projects.</p>
@@ -250,9 +262,7 @@ footer {
     </div>
 
     <div class="featured-card">
-      <div class="featured-media">
-        <img src="mod3.png" alt="World Systems">
-      </div>
+      <div class="featured-media"><img src="mod3.png"></div>
       <div class="featured-content">
         <h3>World Systems</h3>
         <p>Custom world mechanics and systems designed for large modpacks.</p>
