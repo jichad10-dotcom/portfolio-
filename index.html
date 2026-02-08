@@ -6,11 +6,13 @@
   <title>Minecraft Mods Portfolio</title>
   <style>
     :root {
-      --bg: #0f1115;
-      --card: #181b22;
-      --text: #e6e6e6;
-      --muted: #9aa0a6;
-      --accent: #6cf2a2;
+      --bg: #0b0614;
+      --bg-alt: #120a24;
+      --card: rgba(24, 18, 45, 0.65);
+      --text: #f2efff;
+      --muted: #b7aedf;
+      --accent: #a855f7;
+      --accent-strong: #c084fc;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,13 +20,13 @@
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(108,242,162,0.18), transparent 40%),
-        radial-gradient(900px 500px at 80% 20%, rgba(108,242,162,0.12), transparent 45%),
-        radial-gradient(700px 400px at 50% 100%, rgba(108,242,162,0.10), transparent 50%),
-        linear-gradient(180deg, #0f1115 0%, #0b0d11 100%);
+        radial-gradient(900px 500px at 15% -10%, rgba(168,85,247,0.25), transparent 45%),
+        radial-gradient(700px 400px at 85% 20%, rgba(192,132,252,0.18), transparent 50%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+    }
     }
     }
     }
@@ -113,15 +115,15 @@
     }
 
     .card {
-      background: rgba(24, 27, 34, 0.65);
-      backdrop-filter: blur(14px) saturate(120%);
-      -webkit-backdrop-filter: blur(14px) saturate(120%);
-      border-radius: 18px;
+      background: var(--card);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(108, 242, 162, 0.15);
+      border: 1px solid rgba(168,85,247,0.25);
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.45),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        0 15px 40px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(168,85,247,0.15);
       opacity: 0;
       transform: translateY(40px);
       transition:
@@ -129,6 +131,18 @@
         transform 0.8s ease,
         box-shadow 0.4s ease,
         border-color 0.4s ease;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.7),
+        0 0 45px rgba(168,85,247,0.35);
+      border-color: rgba(192,132,252,0.55);
     }
 
     .card.visible {
@@ -182,11 +196,12 @@
     }
 
     .tag {
-      background: rgba(108,242,162,0.15);
-      color: var(--accent);
-      padding: 0.3rem 0.7rem;
+      background: rgba(168,85,247,0.18);
+      color: var(--accent-strong);
+      padding: 0.3rem 0.75rem;
       border-radius: 999px;
       font-size: 0.75rem;
+      font-weight: 600;
     }
 
     footer {
@@ -222,9 +237,11 @@
     .glow {
       font-size: 3.2rem;
       margin-bottom: 1rem;
-      color: var(--accent);
-      text-shadow: 0 0 15px rgba(108,242,162,0.6);
-      animation: pulse 3s infinite ease-in-out;
+      color: var(--accent-strong);
+      text-shadow:
+        0 0 20px rgba(168,85,247,0.9),
+        0 0 50px rgba(168,85,247,0.4);
+      animation: pulse 3.5s infinite ease-in-out;
     }
 
     .typewriter {
@@ -243,17 +260,19 @@
     }
 
     .hero-links a {
-      padding: 0.7rem 1.4rem;
+      padding: 0.7rem 1.6rem;
       border-radius: 999px;
-      background: rgba(108,242,162,0.15);
-      color: var(--accent);
-      font-weight: 600;
-      transition: all 0.3s ease;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #0b0614;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(168,85,247,0.45);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .hero-links a:hover {
-      background: var(--accent);
-      color: #0f1115;
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(168,85,247,0.65);
     }
 
     @keyframes pulse {
@@ -277,23 +296,9 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(600px 300px at 10% 20%, rgba(108,242,162,0.10), transparent 60%),
-        radial-gradient(500px 250px at 90% 80%, rgba(108,242,162,0.08), transparent 60%),
-        repeating-linear-gradient(
-          0deg,
-          rgba(255,255,255,0.015) 0px,
-          rgba(255,255,255,0.015) 1px,
-          transparent 1px,
-          transparent 16px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,0.015) 0px,
-          rgba(255,255,255,0.015) 1px,
-          transparent 1px,
-          transparent 16px
-        );
-      animation: floatGlow 20s ease-in-out infinite alternate;
+        radial-gradient(500px 300px at 20% 30%, rgba(168,85,247,0.18), transparent 60%),
+        radial-gradient(450px 250px at 80% 70%, rgba(192,132,252,0.15), transparent 60%);
+      animation: floatGlow 22s ease-in-out infinite alternate;
       pointer-events: none;
       z-index: -1;
     }
