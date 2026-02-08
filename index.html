@@ -36,7 +36,7 @@ body {
   color: var(--accent-strong);
   opacity: 0;
   transform: translateY(-10px) scale(0.85);
-  transition: all .4s ease;
+  transition: all .4s cubic-bezier(.22,1,.36,1);
   z-index: 1000;
 }
 .brand-sticky.active {
@@ -44,26 +44,25 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* ===== HERO (BACKGROUND SCENE) ===== */
+/* ===== HERO (CINEMATIC SCENE) ===== */
 .hero {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   padding-left: clamp(2.5rem, 8vw, 6rem);
   overflow: hidden;
 
   background:
     radial-gradient(circle at 30% 40%, rgba(168,85,247,0.35), transparent 60%),
-    linear-gradient(180deg, rgba(10,6,20,0.35), rgba(10,6,20,0.85)),
+    linear-gradient(180deg, rgba(10,6,20,0.35), rgba(10,6,20,0.9)),
     url("rox1-illustration.png");
 
-  background-size: cover;
+  background-size: 110%;
   background-position: center right;
   background-repeat: no-repeat;
 
-  will-change: transform, opacity;
+  will-change: transform, opacity, background-size, background-position;
 }
 
 /* bottom blend */
@@ -73,7 +72,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 240px;
+  height: 260px;
   background: linear-gradient(
     to bottom,
     rgba(11,6,20,0),
@@ -86,6 +85,7 @@ body {
   max-width: 520px;
   position: relative;
   z-index: 2;
+  will-change: transform;
 }
 
 .hero-name {
@@ -190,9 +190,8 @@ footer {
 
 <div class="brand-sticky" id="brandSticky">ROX</div>
 
-<!-- HERO -->
 <header class="hero" id="hero">
-  <div class="hero-overlay">
+  <div class="hero-overlay" id="heroText">
     <h1 class="hero-name">ROX</h1>
     <p class="hero-sub">Minecraft Mod Developer</p>
   </div>
@@ -202,16 +201,14 @@ footer {
 
 <section class="mods-section">
   <h2 class="section-title">Featured Mods</h2>
-
   <div class="featured">
     <div class="featured-card">
       <img src="mod1.png">
       <div>
         <h3>Featured Mod One</h3>
-        <p>Flagship gameplay mod with advanced mechanics and clean systems.</p>
+        <p>Flagship gameplay mod with advanced mechanics.</p>
       </div>
     </div>
-
     <div class="featured-card">
       <img src="mod2.png">
       <div>
@@ -222,21 +219,6 @@ footer {
   </div>
 </section>
 
-<section class="mods-section">
-  <h2 class="section-title">All Mods</h2>
-
-  <div class="projects">
-    <div class="card"><img src="mod3.png"><div class="card-content"><h3>Mod Three</h3><p>Utility mod.</p></div></div>
-    <div class="card"><img src="mod4.png"><div class="card-content"><h3>Mod Four</h3><p>Tech mod.</p></div></div>
-    <div class="card"><img src="mod5.png"><div class="card-content"><h3>Mod Five</h3><p>Worldgen mod.</p></div></div>
-    <div class="card"><img src="mod6.png"><div class="card-content"><h3>Mod Six</h3><p>Server optimizations.</p></div></div>
-    <div class="card"><img src="mod7.png"><div class="card-content"><h3>Mod Seven</h3><p>Multiplayer features.</p></div></div>
-    <div class="card"><img src="mod8.png"><div class="card-content"><h3>Mod Eight</h3><p>Library mod.</p></div></div>
-    <div class="card"><img src="mod9.png"><div class="card-content"><h3>Mod Nine</h3><p>Experimental mechanics.</p></div></div>
-    <div class="card"><img src="mod10.png"><div class="card-content"><h3>Mod Ten</h3><p>Endgame progression.</p></div></div>
-  </div>
-</section>
-
 </main>
 
 <footer>
@@ -244,18 +226,31 @@ footer {
 </footer>
 
 <script>
-const hero = document.getElementById('hero');
-const brand = document.getElementById('brandSticky');
+const hero = document.getElementById("hero");
+const heroText = document.getElementById("heroText");
+const brand = document.getElementById("brandSticky");
 
-window.addEventListener('scroll', () => {
+window.addEventListener("scroll", () => {
   const y = window.scrollY;
-  const progress = Math.min(y / 420, 1);
+  const raw = Math.min(y / 500, 1);
 
+  // smooth easing (easeOutCubic)
+  const progress = 1 - Math.pow(1 - raw, 3);
+
+  /* HERO MOVE */
   hero.style.transform = `translateY(${progress * -120}px)`;
   hero.style.opacity = 1 - progress * 0.6;
 
-  if (progress > 0.55) brand.classList.add('active');
-  else brand.classList.remove('active');
+  /* BACKGROUND ZOOM + PARALLAX */
+  hero.style.backgroundSize = `${110 + progress * 6}%`;
+  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
+
+  /* TEXT PARALLAX (closer layer) */
+  heroText.style.transform = `translateY(${progress * -40}px)`;
+
+  /* STICKY NAME */
+  if (progress > 0.55) brand.classList.add("active");
+  else brand.classList.remove("active");
 });
 </script>
 
