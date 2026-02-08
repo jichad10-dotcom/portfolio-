@@ -97,12 +97,11 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS (UPDATED) ================= */
+/* ================= FEATURED MODS ================= */
 .featured {
   display: grid;
   gap: 6rem;
 }
-
 .featured-card {
   position: sticky;
   top: 120px;
@@ -115,58 +114,52 @@ body {
   backdrop-filter: blur(18px);
   border: 1px solid rgba(168,85,247,0.3);
   box-shadow: 0 40px 100px rgba(0,0,0,0.7);
-
   min-height: 420px;
-
   opacity: 0;
   transform: translateY(70px);
   transition: all .9s cubic-bezier(.22,1,.36,1);
 }
-
 .featured-card.visible {
   opacity: 1;
   transform: translateY(0);
 }
-
 .featured-media {
   width: 100%;
-  height: 100%;
   min-height: 300px;
   border-radius: 20px;
   overflow: hidden;
 }
-
 .featured-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .featured-content h3 {
   font-size: 1.6rem;
   margin-bottom: 1rem;
 }
-
 .featured-content p {
   color: var(--muted);
   line-height: 1.6;
 }
 
-/* ================= ALL MODS (LOCKED) ================= */
+/* ================= ALL MODS (WIDER) ================= */
 .mods-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
+  gap: 48px;
 }
+
 .mods-grid.bottom {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(340px, 1fr));
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 48px;
 }
+
 .mod-card {
   background: linear-gradient(180deg, rgba(60,30,120,.3), rgba(10,5,30,.9));
   border-radius: 22px;
-  padding: 24px;
+  padding: 28px;
   min-height: 260px;
   transition: all .4s cubic-bezier(.22,1,.36,1);
   box-shadow:
@@ -174,6 +167,7 @@ body {
     0 0 80px rgba(168,85,247,.45),
     0 0 160px rgba(168,85,247,.3);
 }
+
 .mod-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow:
@@ -181,6 +175,7 @@ body {
     0 0 140px rgba(168,85,247,.6),
     0 0 260px rgba(168,85,247,.45);
 }
+
 .tag {
   display: inline-block;
   font-size: .7rem;
@@ -226,22 +221,18 @@ footer {
   <h2 class="section-title">Featured Mods</h2>
   <div class="featured">
     <div class="featured-card">
-      <div class="featured-media">
-        <img src="mod1.png" alt="Featured Mod One">
-      </div>
+      <div class="featured-media"><img src="mod1.png"></div>
       <div class="featured-content">
         <h3>Better Dungeons</h3>
-        <p>Advanced dungeon systems with deep progression, optimized performance, and custom generation logic.</p>
+        <p>Advanced dungeon systems with deep progression and optimized performance.</p>
       </div>
     </div>
 
     <div class="featured-card">
-      <div class="featured-media">
-        <img src="mod2.png" alt="Featured Mod Two">
-      </div>
+      <div class="featured-media"><img src="mod2.png"></div>
       <div class="featured-content">
         <h3>Core Engine</h3>
-        <p>A high-performance backend mod that powers multiple large-scale Minecraft projects.</p>
+        <p>High-performance backend mod powering large-scale projects.</p>
       </div>
     </div>
   </div>
