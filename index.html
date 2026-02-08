@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rox — Minecraft Mod Developer</title>
 
 <style>
 :root {
   --bg: #0b0614;
   --bg-alt: #120a24;
-  --card: rgba(24, 18, 45, 0.7);
+  --card: rgba(24, 18, 45, 0.75);
   --text: #f2efff;
   --muted: #b7aedf;
   --accent: #a855f7;
@@ -38,7 +38,7 @@ body {
   letter-spacing: .08em;
   color: var(--accent-strong);
   opacity: 0;
-  transform: translateY(-10px) scale(0.8);
+  transform: translateY(-10px) scale(0.85);
   transition: all .4s ease;
   z-index: 1000;
 }
@@ -47,84 +47,73 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* ===== HERO ===== */
+/* ===== HERO (BLENDED SCENE) ===== */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   will-change: transform, opacity;
 }
 
-.hero-inner {
+.hero-visual {
   position: relative;
-  max-width: 1200px;
-  margin: auto;
-  padding: 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  width: min(1200px, 94vw);
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow:
+    0 70px 180px rgba(0,0,0,0.8),
+    0 0 140px rgba(168,85,247,0.45);
 }
 
-.hero-inner::before {
+.hero-visual img {
+  width: 100%;
+  display: block;
+}
+
+/* lighting + blend */
+.hero-visual::after {
   content: "";
   position: absolute;
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(168,85,247,0.4), transparent 70%);
-  top: 50%;
-  left: 35%;
-  transform: translate(-50%, -50%);
-  filter: blur(140px);
-  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.35), transparent 60%),
+    linear-gradient(180deg, rgba(10,6,20,0.15), rgba(10,6,20,0.75));
 }
 
-.hero-left {
-  position: relative;
+/* overlay text */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  padding: clamp(2.5rem, 6vw, 5.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   z-index: 2;
 }
 
 .hero-name {
-  font-size: clamp(4.5rem, 11vw, 9rem);
+  font-size: clamp(4rem, 10vw, 7.5rem);
   font-weight: 900;
-  color: var(--accent-strong);
-  line-height: .9;
-  text-shadow: 0 0 80px rgba(168,85,247,0.8);
+  color: #e9d5ff;
+  line-height: 0.95;
+  text-shadow:
+    0 0 40px rgba(168,85,247,0.85),
+    0 0 90px rgba(168,85,247,0.6);
 }
 
 .hero-sub {
-  margin-top: 1.4rem;
-  max-width: 520px;
+  margin-top: 1rem;
   font-size: 1.1rem;
   color: var(--muted);
-}
-
-.hero-right {
-  position: relative;
-  margin-left: -90px;
-  z-index: 1;
-}
-
-.hero-right img {
-  width: 100%;
-  max-width: 520px;
-  border-radius: 28px;
-  box-shadow:
-    0 50px 140px rgba(0,0,0,.7),
-    0 0 120px rgba(168,85,247,.5);
-  animation: float 6s ease-in-out infinite alternate;
-}
-
-@keyframes float {
-  from { transform: translateY(0); }
-  to { transform: translateY(-18px); }
+  max-width: 420px;
 }
 
 /* ===== MOD SECTIONS ===== */
 .mods-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 6rem 3rem;
+  padding: 7rem 3rem;
 }
 
 .section-title {
@@ -134,7 +123,7 @@ body {
   padding-left: 1rem;
 }
 
-/* Featured */
+/* Featured mods */
 .featured {
   display: grid;
   gap: 4rem;
@@ -147,7 +136,7 @@ body {
   grid-template-columns: 1.2fr 1fr;
   gap: 2.5rem;
   padding: 2.5rem;
-  border-radius: 24px;
+  border-radius: 26px;
   background: var(--card);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(168,85,247,0.25);
@@ -171,7 +160,7 @@ body {
 .card {
   background: var(--card);
   backdrop-filter: blur(16px);
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
   border: 1px solid rgba(168,85,247,0.25);
   box-shadow: 0 15px 40px rgba(0,0,0,0.55);
@@ -206,16 +195,13 @@ footer {
 
 <div class="brand-sticky" id="brandSticky">ROX</div>
 
+<!-- HERO -->
 <header class="hero" id="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
+  <div class="hero-visual">
+    <img src="rox-illustration.png" alt="Rox working on a Minecraft mod">
+    <div class="hero-overlay">
       <h1 class="hero-name">ROX</h1>
-      <p class="hero-sub">
-        Minecraft mod developer building performance-focused and creative gameplay mods.
-      </p>
-    </div>
-    <div class="hero-right">
-      <img src="rox-illustration.png" alt="Rox working on a Minecraft mod">
+      <p class="hero-sub">Minecraft Mod Developer</p>
     </div>
   </div>
 </header>
@@ -230,7 +216,7 @@ footer {
       <img src="mod1.png">
       <div>
         <h3>Featured Mod One</h3>
-        <p>Flagship gameplay mod with advanced mechanics.</p>
+        <p>Flagship gameplay mod with advanced mechanics and clean systems.</p>
       </div>
     </div>
 
@@ -238,7 +224,7 @@ footer {
       <img src="mod2.png">
       <div>
         <h3>Featured Mod Two</h3>
-        <p>High-impact performance optimization mod.</p>
+        <p>Performance-focused mod built for large servers.</p>
       </div>
     </div>
   </div>
@@ -268,20 +254,16 @@ footer {
 <script>
 const hero = document.getElementById('hero');
 const brand = document.getElementById('brandSticky');
-const image = document.querySelector('.hero-right img');
 
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  const progress = Math.min(y / 450, 1);
+  const progress = Math.min(y / 420, 1);
 
-  hero.style.transform = `
-    translateY(${progress * -140}px)
-    scale(${1 - progress * 0.08})
-  `;
-  hero.style.opacity = 1 - progress * 0.65;
-  image.style.transform = `translateY(${progress * -40}px)`;
+  hero.style.transform =
+    `translateY(${progress * -120}px) scale(${1 - progress * 0.06})`;
+  hero.style.opacity = 1 - progress * 0.6;
 
-  if (progress > 0.6) brand.classList.add('active');
+  if (progress > 0.55) brand.classList.add('active');
   else brand.classList.remove('active');
 });
 </script>
