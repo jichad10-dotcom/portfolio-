@@ -113,78 +113,7 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS (LOCKED) ================= */
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 56px;
-}
-
-.featured-card {
-  background: linear-gradient(180deg, rgba(60,30,120,.35), rgba(10,5,30,.9));
-  border-radius: 26px;
-  padding: 40px;
-  min-height: 220px;
-  transition: all .4s cubic-bezier(.22,1,.36,1);
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.45),
-    0 0 90px rgba(168,85,247,.45),
-    0 0 160px rgba(168,85,247,.3);
-}
-
-.featured-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.7),
-    0 0 140px rgba(168,85,247,.6),
-    0 0 260px rgba(168,85,247,.45);
-}
-
-/* ================= ALL MODS (LOCKED) ================= */
-.mods-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(360px, 1fr));
-  gap: 56px;
-}
-
-.mods-grid-last {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 56px;
-  margin-top: 56px;
-}
-
-.mod-card {
-  background: linear-gradient(180deg, rgba(60,30,120,.3), rgba(10,5,30,.9));
-  border-radius: 22px;
-  padding: 32px;
-  min-height: 260px;
-  transition: all .4s cubic-bezier(.22,1,.36,1);
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.45),
-    0 0 80px rgba(168,85,247,.45),
-    0 0 160px rgba(168,85,247,.3);
-}
-
-.mod-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.7),
-    0 0 140px rgba(168,85,247,.6),
-    0 0 260px rgba(168,85,247,.45);
-}
-
-.tag {
-  display: inline-block;
-  font-size: .7rem;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(168,85,247,.3);
-  margin-bottom: 12px;
-}
-
-/* ================= ABOUT (2× MORE SPACE) ================= */
+/* ================= ABOUT (LOCKED) ================= */
 .about {
   background: linear-gradient(
     180deg,
@@ -192,7 +121,7 @@ body {
     rgba(11,6,20,1)
   );
   border-top: 1px solid rgba(168,85,247,.25);
-  margin-top: 24rem; /* ← doubled spacing */
+  margin-top: 24rem;
 }
 
 .about-grid {
@@ -232,6 +161,47 @@ body {
   color: var(--muted);
 }
 
+/* ================= GET IN TOUCH ================= */
+.contact {
+  margin-top: 24rem; /* same rhythm as About spacing */
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+.contact-card {
+  background: linear-gradient(180deg, rgba(60,30,120,.3), rgba(10,5,30,.9));
+  border-radius: 22px;
+  padding: 36px;
+  text-align: center;
+  transition: all .4s cubic-bezier(.22,1,.36,1);
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,.45),
+    0 0 80px rgba(168,85,247,.45),
+    0 0 160px rgba(168,85,247,.3);
+}
+
+.contact-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 0 0 1px rgba(168,85,247,.7),
+    0 0 140px rgba(168,85,247,.6),
+    0 0 260px rgba(168,85,247,.45);
+}
+
+.contact-card h3 {
+  margin-bottom: 12px;
+}
+
+.contact-card p {
+  font-size: .95rem;
+  color: var(--muted);
+}
+
+/* ================= FOOTER ================= */
 footer {
   text-align: center;
   padding: 3rem;
@@ -240,10 +210,8 @@ footer {
 }
 
 @media(max-width: 900px) {
-  .featured-grid,
-  .mods-grid,
-  .mods-grid-last,
-  .about-grid {
+  .about-grid,
+  .contact-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -262,41 +230,6 @@ footer {
 </header>
 
 <main>
-
-<section class="mods-section">
-  <h2 class="section-title">Featured Mods</h2>
-  <div class="featured-grid">
-    <div class="featured-card">
-      <span class="tag">Flagship</span>
-      <h3>Better Dungeons</h3>
-      <p>Advanced dungeon systems with optimized performance and scalability.</p>
-    </div>
-    <div class="featured-card">
-      <span class="tag">Core</span>
-      <h3>Core Engine</h3>
-      <p>High-performance backend powering multiple large Minecraft mods.</p>
-    </div>
-  </div>
-</section>
-
-<section class="mods-section">
-  <h2 class="section-title">All Mods</h2>
-
-  <div class="mods-grid">
-    <div class="mod-card"><span class="tag">Utility</span><h3>Mod One</h3></div>
-    <div class="mod-card"><span class="tag">Worldgen</span><h3>Mod Two</h3></div>
-    <div class="mod-card"><span class="tag">Library</span><h3>Mod Three</h3></div>
-
-    <div class="mod-card"><span class="tag">Gameplay</span><h3>Mod Four</h3></div>
-    <div class="mod-card"><span class="tag">Performance</span><h3>Mod Five</h3></div>
-    <div class="mod-card"><span class="tag">Utility</span><h3>Mod Six</h3></div>
-  </div>
-
-  <div class="mods-grid-last">
-    <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
-    <div class="mod-card"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
-  </div>
-</section>
 
 <section class="mods-section about">
   <h2 class="section-title">About Me</h2>
@@ -319,30 +252,30 @@ footer {
   </div>
 </section>
 
+<section class="mods-section contact">
+  <h2 class="section-title">Get In Touch</h2>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>Email</h3>
+      <p>rox@example.com</p>
+    </div>
+
+    <div class="contact-card">
+      <h3>GitHub</h3>
+      <p>github.com/rox</p>
+    </div>
+
+    <div class="contact-card">
+      <h3>Discord</h3>
+      <p>rox#0001</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>© 2026 Rox · Built for Minecraft modding</footer>
-
-<script>
-const hero = document.getElementById("hero");
-const heroText = document.getElementById("heroText");
-const brand = document.getElementById("brandSticky");
-
-window.addEventListener("scroll", () => {
-  const y = window.scrollY;
-  const raw = Math.min(y / 500, 1);
-  const progress = 1 - Math.pow(1 - raw, 3);
-
-  hero.style.transform = `translateY(${progress * -120}px)`;
-  hero.style.opacity = 1 - progress * 0.6;
-  hero.style.backgroundSize = `${110 + progress * 6}%`;
-  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
-  heroText.style.transform = `translateY(${progress * -40}px)`;
-
-  if (progress > 0.55) brand.classList.add("active");
-  else brand.classList.remove("active");
-});
-</script>
 
 </body>
 </html>
