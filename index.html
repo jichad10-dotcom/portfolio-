@@ -184,7 +184,7 @@ body {
   margin-bottom: 12px;
 }
 
-/* ================= ABOUT (LOCKED) ================= */
+/* ================= ABOUT (SPACING ADJUSTED) ================= */
 .about {
   background: linear-gradient(
     180deg,
@@ -192,6 +192,7 @@ body {
     rgba(11,6,20,1)
   );
   border-top: 1px solid rgba(168,85,247,.25);
+  padding-top: 10rem; /* ← extra space from All Mods */
 }
 
 .about-grid {
@@ -231,7 +232,13 @@ body {
   color: var(--muted);
 }
 
-/* ================= RESPONSIVE ================= */
+footer {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
 @media(max-width: 900px) {
   .featured-grid,
   .mods-grid,
@@ -304,22 +311,10 @@ body {
     </div>
 
     <div class="about-stats">
-      <div class="stat">
-        <h3>2+</h3>
-        <p>Years Experience</p>
-      </div>
-      <div class="stat">
-        <h3>100+</h3>
-        <p>Published Mods</p>
-      </div>
-      <div class="stat">
-        <h3>50+</h3>
-        <p>Client Servers</p>
-      </div>
-      <div class="stat">
-        <h3>4.6/5</h3>
-        <p>Avg Rating</p>
-      </div>
+      <div class="stat"><h3>2+</h3><p>Years Experience</p></div>
+      <div class="stat"><h3>100+</h3><p>Published Mods</p></div>
+      <div class="stat"><h3>50+</h3><p>Client Servers</p></div>
+      <div class="stat"><h3>4.6/5</h3><p>Avg Rating</p></div>
     </div>
   </div>
 </section>
