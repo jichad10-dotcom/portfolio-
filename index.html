@@ -38,13 +38,14 @@ body {
   transform: translateY(-10px) scale(0.85);
   transition: all .4s cubic-bezier(.22,1,.36,1);
   z-index: 1000;
+  cursor: pointer;
 }
 .brand-sticky.active {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-/* ================= HERO (LOCKED) ================= */
+/* ================= HERO ================= */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -232,7 +233,7 @@ body {
   color: var(--muted);
 }
 
-/* ================= GET IN TOUCH ================= */
+/* ================= CONTACT ================= */
 .contact {
   margin-top: 24rem;
 }
@@ -267,6 +268,7 @@ body {
   margin-bottom: 24px;
 }
 
+/* ================= FOOTER ================= */
 footer {
   text-align: center;
   padding: 3rem;
@@ -290,8 +292,8 @@ footer {
 
 <div class="brand-sticky" id="brandSticky">ROX</div>
 
-<header class="hero">
-  <div class="hero-overlay">
+<header class="hero" id="hero">
+  <div class="hero-overlay" id="heroText">
     <h1 class="hero-name">ROX</h1>
     <p class="hero-sub">Minecraft Mod Developer</p>
   </div>
@@ -326,7 +328,6 @@ footer {
 
 <section class="mods-section about">
   <h2 class="section-title">About Me</h2>
-
   <div class="about-grid">
     <div class="about-text">
       <p>
@@ -335,7 +336,6 @@ footer {
         through thoughtful design, balanced mechanics, and reliable code.
       </p>
     </div>
-
     <div class="about-stats">
       <div class="stat"><h3>2+</h3><p>Years Experience</p></div>
       <div class="stat"><h3>100+</h3><p>Published Mods</p></div>
@@ -347,12 +347,10 @@ footer {
 
 <section class="mods-section contact">
   <h2 class="section-title">Get In Touch</h2>
-
   <div class="contact-grid">
     <div class="contact-image">
       <img src="roxcontact1.png" alt="Rox contact">
     </div>
-
     <div>
       <div class="contact-item"><h3>Gmail</h3><p>rox@gmail.com</p></div>
       <div class="contact-item"><h3>Discord</h3><p>kratos_897</p></div>
@@ -363,6 +361,33 @@ footer {
 </main>
 
 <footer>© 2026 Rox · Built for Minecraft modding</footer>
+
+<script>
+/* ===== HERO SCROLL + STICKY BRAND ===== */
+const hero = document.getElementById("hero");
+const heroText = document.getElementById("heroText");
+const brand = document.getElementById("brandSticky");
+
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  const raw = Math.min(y / 500, 1);
+  const progress = 1 - Math.pow(1 - raw, 3);
+
+  hero.style.transform = `translateY(${progress * -120}px)`;
+  hero.style.opacity = 1 - progress * 0.6;
+  hero.style.backgroundSize = `${110 + progress * 6}%`;
+  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
+  heroText.style.transform = `translateY(${progress * -40}px)`;
+
+  if (progress > 0.55) brand.classList.add("active");
+  else brand.classList.remove("active");
+});
+
+/* scroll to top on ROX click */
+brand.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
 
 </body>
 </html>
