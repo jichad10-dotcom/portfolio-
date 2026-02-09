@@ -163,41 +163,50 @@ body {
 
 /* ================= GET IN TOUCH ================= */
 .contact {
-  margin-top: 24rem; /* same rhythm as About spacing */
+  margin-top: 24rem;
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
-.contact-card {
-  background: linear-gradient(180deg, rgba(60,30,120,.3), rgba(10,5,30,.9));
-  border-radius: 22px;
-  padding: 36px;
-  text-align: center;
-  transition: all .4s cubic-bezier(.22,1,.36,1);
+.contact-image {
+  border-radius: 26px;
+  overflow: hidden;
   box-shadow:
     0 0 0 1px rgba(168,85,247,.45),
-    0 0 80px rgba(168,85,247,.45),
-    0 0 160px rgba(168,85,247,.3);
+    0 0 120px rgba(168,85,247,.35);
 }
 
-.contact-card:hover {
-  transform: translateY(-8px);
-  box-shadow:
-    0 0 0 1px rgba(168,85,247,.7),
-    0 0 140px rgba(168,85,247,.6),
-    0 0 260px rgba(168,85,247,.45);
+.contact-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.contact-card h3 {
-  margin-bottom: 12px;
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-.contact-card p {
-  font-size: .95rem;
+.contact-item {
+  background: rgba(24,18,45,.65);
+  border-radius: 18px;
+  padding: 28px 32px;
+  border: 1px solid rgba(168,85,247,.25);
+  box-shadow: 0 0 80px rgba(168,85,247,.3);
+}
+
+.contact-item h3 {
+  margin-bottom: 8px;
+}
+
+.contact-item p {
+  font-size: 1rem;
   color: var(--muted);
 }
 
@@ -222,8 +231,8 @@ footer {
 
 <div class="brand-sticky" id="brandSticky">ROX</div>
 
-<header class="hero" id="hero">
-  <div class="hero-overlay" id="heroText">
+<header class="hero">
+  <div class="hero-overlay">
     <h1 class="hero-name">ROX</h1>
     <p class="hero-sub">Minecraft Mod Developer</p>
   </div>
@@ -256,19 +265,20 @@ footer {
   <h2 class="section-title">Get In Touch</h2>
 
   <div class="contact-grid">
-    <div class="contact-card">
-      <h3>Email</h3>
-      <p>rox@example.com</p>
+    <div class="contact-image">
+      <img src="roxcontact1.png" alt="Rox working on a mod">
     </div>
 
-    <div class="contact-card">
-      <h3>GitHub</h3>
-      <p>github.com/rox</p>
-    </div>
+    <div class="contact-info">
+      <div class="contact-item">
+        <h3>Gmail</h3>
+        <p>rox@gmail.com</p>
+      </div>
 
-    <div class="contact-card">
-      <h3>Discord</h3>
-      <p>rox#0001</p>
+      <div class="contact-item">
+        <h3>Discord</h3>
+        <p>kratos_897</p>
+      </div>
     </div>
   </div>
 </section>
