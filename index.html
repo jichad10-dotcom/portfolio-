@@ -322,10 +322,10 @@ footer {
       </p>
     </div>
     <div class="about-stats">
-      <div class="stat"><h3>2+</h3><p>Years Experience</p></div>
-      <div class="stat"><h3>100+</h3><p>Published Mods</p></div>
-      <div class="stat"><h3>50+</h3><p>Client Servers</p></div>
-      <div class="stat"><h3>4.6/5</h3><p>Avg Rating</p></div>
+      <div class="stat"><h3 data-count="2">0+</h3><p>Years Experience</p></div>
+      <div class="stat"><h3 data-count="100">0+</h3><p>Published Mods</p></div>
+      <div class="stat"><h3 data-count="50">0+</h3><p>Clients Served</p></div>
+      <div class="stat"><h3 data-count="4.6">0</h3><p>Avg Rating</p></div>
     </div>
   </div>
 </section>
@@ -368,7 +368,6 @@ const particles = Array.from({ length: 90 }, () => ({
 
 function drawParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   for (const p of particles) {
     ctx.globalAlpha = p.a;
     ctx.shadowColor = "rgba(168,85,247,0.6)";
@@ -388,7 +387,7 @@ function drawParticles() {
 }
 drawParticles();
 
-/* ===== HERO SCROLL ===== */
+/* ===== HERO SCROLL + BRAND ===== */
 const hero = document.getElementById("hero");
 const heroText = document.getElementById("heroText");
 const brand = document.getElementById("brandSticky");
@@ -407,9 +406,41 @@ window.addEventListener("scroll", () => {
   brand.classList.toggle("active", p > 0.55);
 });
 
-brand.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+/* ===== STATS COUNT UP ===== */
+const stats = document.querySelectorAll(".stat h3");
+const statObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    const el = entry.target;
+    const target = parseFloat(el.dataset.count);
+    const isDecimal = target % 1 !== 0;
+    const suffix = el.textContent.includes("+") ? "+" : "";
+    const start = performance.now();
+    const duration = 1200;
+
+    function animate(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      let value = target * eased;
+
+      el.textContent = isDecimal
+        ? value.toFixed(1)
+        : Math.floor(value);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
+
+    requestAnimationFrame(animate);
+    statObserver.unobserve(el);
+  });
+}, { threshold: 0.6 });
+
+stats.forEach(stat => statObserver.observe(stat));
 </script>
 
 </body>
