@@ -113,7 +113,7 @@ body {
   padding-left: 1rem;
 }
 
-/* ================= FEATURED MODS (NEW, SAFE) ================= */
+/* ================= FEATURED MODS (LOCKED) ================= */
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -140,7 +140,7 @@ body {
     0 0 260px rgba(168,85,247,.45);
 }
 
-/* ================= ALL MODS (UNCHANGED) ================= */
+/* ================= ALL MODS (LOCKED) ================= */
 .mods-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(360px, 1fr));
@@ -184,17 +184,59 @@ body {
   margin-bottom: 12px;
 }
 
-footer {
-  text-align: center;
-  padding: 3rem;
-  color: var(--muted);
-  font-size: .85rem;
+/* ================= ABOUT (NEW) ================= */
+.about {
+  background: linear-gradient(
+    180deg,
+    rgba(18,10,36,0.85),
+    rgba(11,6,20,1)
+  );
+  border-top: 1px solid rgba(168,85,247,.25);
 }
 
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.stat {
+  background: rgba(24,18,45,.65);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid rgba(168,85,247,.25);
+  box-shadow: 0 0 60px rgba(168,85,247,.25);
+}
+
+.stat h3 {
+  font-size: 2rem;
+  color: var(--accent-strong);
+}
+
+.stat p {
+  margin-top: 6px;
+  font-size: .9rem;
+  color: var(--muted);
+}
+
+/* ================= RESPONSIVE ================= */
 @media(max-width: 900px) {
   .featured-grid,
   .mods-grid,
-  .mods-grid-last {
+  .mods-grid-last,
+  .about-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -214,17 +256,15 @@ footer {
 
 <main>
 
-<!-- FEATURED MODS (NEW) -->
+<!-- FEATURED MODS -->
 <section class="mods-section">
   <h2 class="section-title">Featured Mods</h2>
-
   <div class="featured-grid">
     <div class="featured-card">
       <span class="tag">Flagship</span>
       <h3>Better Dungeons</h3>
       <p>Advanced dungeon systems with optimized performance and scalability.</p>
     </div>
-
     <div class="featured-card">
       <span class="tag">Core</span>
       <h3>Core Engine</h3>
@@ -233,7 +273,7 @@ footer {
   </div>
 </section>
 
-<!-- ALL MODS (UNCHANGED) -->
+<!-- ALL MODS -->
 <section class="mods-section">
   <h2 class="section-title">All Mods</h2>
 
@@ -250,6 +290,44 @@ footer {
   <div class="mods-grid-last">
     <div class="mod-card"><span class="tag">Experimental</span><h3>Mod Seven</h3></div>
     <div class="mod-card"><span class="tag">Endgame</span><h3>Mod Eight</h3></div>
+  </div>
+</section>
+
+<!-- ABOUT (NEW) -->
+<section class="mods-section about">
+  <h2 class="section-title">About Me</h2>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I’m <strong>Rox</strong>, a Minecraft mod developer focused on building
+        performance-friendly, scalable mods that work seamlessly in large
+        modpacks and multiplayer environments.
+      </p>
+      <p style="margin-top:1.5rem;">
+        My work blends clean architecture, optimized systems, and creative
+        gameplay mechanics — always with long-term maintainability in mind.
+      </p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat">
+        <h3>10+</h3>
+        <p>Published Mods</p>
+      </div>
+      <div class="stat">
+        <h3>500k+</h3>
+        <p>Total Downloads</p>
+      </div>
+      <div class="stat">
+        <h3>3+</h3>
+        <p>Years Experience</p>
+      </div>
+      <div class="stat">
+        <h3>1M+</h3>
+        <p>Active Players</p>
+      </div>
+    </div>
   </div>
 </section>
 
