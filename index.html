@@ -97,10 +97,9 @@ body {
   line-height: .95;
   color: #e9d5ff;
   text-shadow:
-    0 0 40px rgba(168,85,247,0.75),
-    0 0 90px rgba(168,85,247,0.65),
-    0 0 180px rgba(168,85,247,0.45),
-    0 0 260px rgba(168,85,247,0.25);
+    0 0 40px rgba(168,85,247,.8),
+    0 0 90px rgba(168,85,247,.65),
+    0 0 180px rgba(168,85,247,.45);
 }
 
 .hero-sub {
@@ -139,8 +138,7 @@ body {
   min-height: 220px;
   box-shadow:
     0 0 0 1px rgba(168,85,247,.45),
-    0 0 90px rgba(168,85,247,.45),
-    0 0 160px rgba(168,85,247,.3);
+    0 0 90px rgba(168,85,247,.45);
   transition: all .4s cubic-bezier(.22,1,.36,1);
 }
 
@@ -170,8 +168,7 @@ body {
   min-height: 260px;
   box-shadow:
     0 0 0 1px rgba(168,85,247,.45),
-    0 0 80px rgba(168,85,247,.45),
-    0 0 160px rgba(168,85,247,.3);
+    0 0 80px rgba(168,85,247,.45);
   transition: all .4s cubic-bezier(.22,1,.36,1);
 }
 
@@ -193,10 +190,9 @@ body {
   margin-top: 24rem;
   background: linear-gradient(
     180deg,
-    rgba(18,10,36,0.85),
+    rgba(18,10,36,.85),
     rgba(11,6,20,1)
   );
-  border-top: 1px solid rgba(168,85,247,.25);
 }
 
 .about-grid {
@@ -241,15 +237,9 @@ body {
   align-items: center;
 }
 
-.contact-image {
-  border-radius: 26px;
-  overflow: hidden;
-}
-
 .contact-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  border-radius: 26px;
 }
 
 .contact-item {
@@ -343,9 +333,7 @@ footer {
 <section class="mods-section contact">
   <h2 class="section-title">Get In Touch</h2>
   <div class="contact-grid">
-    <div class="contact-image">
-      <img src="roxcontact1.png" alt="Rox contact">
-    </div>
+    <img src="roxcontact1.png" alt="Contact">
     <div>
       <div class="contact-item"><h3>Gmail</h3><p>rox@gmail.com</p></div>
       <div class="contact-item"><h3>Discord</h3><p>kratos_897</p></div>
@@ -358,7 +346,7 @@ footer {
 <footer>© 2026 Rox · Built for Minecraft modding</footer>
 
 <script>
-/* ===== PARTICLES ===== */
+/* ===== PIXEL PARTICLES ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -369,30 +357,30 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-const particles = Array.from({ length: 70 }, () => ({
+const particles = Array.from({ length: 90 }, () => ({
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
-  r: Math.random() * 1.8 + 0.6,
-  vx: (Math.random() - 0.5) * 0.15,
-  vy: -Math.random() * 0.25 - 0.05,
-  a: Math.random() * 0.6 + 0.3
+  size: Math.floor(Math.random() * 3) + 2,
+  vx: (Math.random() - 0.5) * 0.12,
+  vy: -Math.random() * 0.35 - 0.1,
+  a: Math.random() * 0.5 + 0.3
 }));
 
 function drawParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   for (const p of particles) {
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(168,85,247,${p.a})`;
+    ctx.globalAlpha = p.a;
     ctx.shadowColor = "rgba(168,85,247,0.6)";
-    ctx.shadowBlur = 12;
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.shadowBlur = 10;
+    ctx.fillStyle = "#a855f7";
+    ctx.fillRect(p.x, p.y, p.size, p.size);
 
     p.x += p.vx;
     p.y += p.vy;
 
-    if (p.y < -20) {
-      p.y = canvas.height + 20;
+    if (p.y < -10) {
+      p.y = canvas.height + 10;
       p.x = Math.random() * canvas.width;
     }
   }
@@ -400,7 +388,7 @@ function drawParticles() {
 }
 drawParticles();
 
-/* ===== HERO SCROLL + BRAND ===== */
+/* ===== HERO SCROLL ===== */
 const hero = document.getElementById("hero");
 const heroText = document.getElementById("heroText");
 const brand = document.getElementById("brandSticky");
@@ -408,15 +396,15 @@ const brand = document.getElementById("brandSticky");
 window.addEventListener("scroll", () => {
   const y = window.scrollY;
   const raw = Math.min(y / 500, 1);
-  const progress = 1 - Math.pow(1 - raw, 3);
+  const p = 1 - Math.pow(1 - raw, 3);
 
-  hero.style.transform = `translateY(${progress * -120}px)`;
-  hero.style.opacity = 1 - progress * 0.6;
-  hero.style.backgroundSize = `${110 + progress * 6}%`;
-  hero.style.backgroundPositionY = `${50 - progress * 6}%`;
-  heroText.style.transform = `translateY(${progress * -40}px)`;
+  hero.style.transform = `translateY(${p * -120}px)`;
+  hero.style.opacity = 1 - p * 0.6;
+  hero.style.backgroundSize = `${110 + p * 6}%`;
+  hero.style.backgroundPositionY = `${50 - p * 6}%`;
+  heroText.style.transform = `translateY(${p * -40}px)`;
 
-  brand.classList.toggle("active", progress > 0.55);
+  brand.classList.toggle("active", p > 0.55);
 });
 
 brand.addEventListener("click", () => {
